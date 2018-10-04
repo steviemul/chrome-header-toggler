@@ -1,16 +1,4 @@
 
-const createElement = (option) => {
-
-  return`
-    <div class="option">
-      <input type="checkbox" id="chk-${option.value}" class="switch-input">
-      <label for="chk-${option.value}" class="switch-label">
-        <span class="toggle--on">${option.on.text}</span>
-        <span class="toggle--off">${option.off.text}</span>
-      </label>
-    </div>`;
-};
-
 class ToggleOption extends HTMLElement {
 
   connectedCallback () {
@@ -18,7 +6,7 @@ class ToggleOption extends HTMLElement {
   }
 
   build (option, tabId, url) {
-    this.innerHTML = createElement(option);  
+    this.innerHTML = this.template(option);  
 
     const checkbox = this.querySelector('input');
 
@@ -29,6 +17,17 @@ class ToggleOption extends HTMLElement {
     checkbox.addEventListener('change', (evt) => {
       chrome.runtime.sendMessage({action: option.value, value: evt.target.checked, tabId:tabId, url: url});
     });
+  }
+
+  template (option) {
+    return `
+      <div class="option">
+        <input type="checkbox" id="chk-${option.value}" class="switch-input">
+        <label for="chk-${option.value}" class="switch-label">
+          <span class="toggle--on">${option.on.text}</span>
+          <span class="toggle--off">${option.off.text}</span>
+        </label>
+      </div>`;
   }
 }
 

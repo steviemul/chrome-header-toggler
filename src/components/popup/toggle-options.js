@@ -1,4 +1,4 @@
-import options from '../options.js';
+import options from '../../options.js';
 
 class ToggleOptions extends HTMLElement {
 
