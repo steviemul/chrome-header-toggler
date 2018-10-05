@@ -1,3 +1,5 @@
+import {filterOptions} from './utils.js';
+
 let options = [];
 
 const encodeProperty = (url, property) => {
@@ -59,20 +61,37 @@ const addMessageListeners = () => {
   });
 };
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  chrome.storage.sync.get({options:[]}, (state) => {
-    if (state.options.length > 0) {
-      options = state.options;
+const checkOptions = (state, tabId, tab) => {
 
-      addWebRequestListener();
-      addMessageListeners();
-      chrome.pageAction.show(tabId);
-    }
+  const filteredOptions = filterOptions(state.options, tab.url);
+
+  if (filteredOptions.length > 0) {
+    options = filteredOptions;
+
+    chrome.pageAction.setTitle({
+      tabId: tabId,
+      title: 'Chrome Header Toggler'
+    });
+
+    chrome.pageAction.setPopup({
+      tabId: tabId,
+      popup: 'html/popup.html'
+    });
+  }
+};
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+
+  chrome.pageAction.show(tabId);
+
+  chrome.storage.sync.get({options:[]}, (state) => {
+    checkOptions(state, tabId, tab);
   });
   
 });
 
-
+addWebRequestListener();
+addMessageListeners();
 
 const sendToTab = (tabId, payload) => {
 

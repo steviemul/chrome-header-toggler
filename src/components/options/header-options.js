@@ -1,77 +1,11 @@
+import template from './options-template.js';
+
 const createChild = (state) => {
   const child = document.createElement('li');
 
   updateChild(child, state);
 
   return child;
-};
-
-const inputFields = () => {
-
-  return `
-    <div class="row">
-      <form class="col s12">
-        <div class="row">
-           <div class="col s12">
-            <label>Description</label>
-            <input type="text" data-bind="description" class="validate">
-          </div>
-          <div class="col s12">
-            <label>Host/s</label>
-            <input type="text" data-bind="host" required>
-          </div>
-        </div>
-        <div class="row section-label">
-          <div class="col s12">
-            <h6>Header Details</h6>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col s6">
-            <label>Header Name</label>
-            <input type="text" data-bind="header">
-          </div>
-          <div class="col s6">
-            <label>Option Name</label>
-            <input type="text" data-bind="value">
-          </div>
-        </div>
-
-        <div class="row section-label">
-          <div class="col s12">
-            <h6>On</h6>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col s6">
-            <label>Option Value</label>
-            <input type="text" data-bind="on.value">
-          </div>
-          <div class="col s6">
-            <label>Option Text</label>
-            <input type="text" data-bind="on.text">
-          </div>
-        </div>
-
-        <div class="row section-label">
-          <div class="col s12">
-            <h6>Off</h6>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col s6">
-            <label>Option Value</label>
-            <input type="text" data-bind="off.value">
-          </div>
-          <div class="col s6">
-            <label>Option Text</label>
-            <input type="text" data-bind="off.text">
-          </div>
-        </div>
-      </form>
-      
-    </div>
-  `;
 };
 
 const applyBindings = (child, state) => {
@@ -101,6 +35,16 @@ const applyBindings = (child, state) => {
   });
 };
 
+const getDescription = (state) => {
+
+  if (state.description){
+    const hosts = state.host ? `(${state.host})` : '(All hosts)'
+    return `${state.description} ${hosts}`
+  }
+
+  return 'Incomplete Header';
+};
+
 const updateChild = (child, state) => {
 
   child.innerState = state;
@@ -108,7 +52,7 @@ const updateChild = (child, state) => {
   child.innerHTML = `
     <div class="collapsible-header row">
       <div class="col s10 valign-wrapper">
-        <i class="material-icons">build</i>${state.description ? state.description : 'Header'}
+        <i class="material-icons">build</i>${getDescription(state)}
       </div>
       <div class="col s2 valign-wrapper">
         <a class="btn-flat waves-effect waves-light" title="save" style="color:#1B5E20">
@@ -119,7 +63,7 @@ const updateChild = (child, state) => {
         </a>
       </div>
     </div>
-    <div class="collapsible-body">${inputFields(state)}</div>
+    <div class="collapsible-body">${template}</div>
   `;
 
   applyBindings(child, state);
@@ -154,9 +98,9 @@ class HeaderOptions extends HTMLElement {
         this.update();
       }
       else if (clicker.title === 'delete') {
-        const li = clicker.closest('li');
-        const position = Array.from(li.parentNode.children).indexOf(li);
-
+        const option = clicker.closest('li').innerState;
+        const position = this._state.options.indexOf(option);
+        
         this._state.options.splice(position, 1);
         this.update();
       }

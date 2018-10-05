@@ -22,7 +22,6 @@
     "default_icon":{
       "36": "img/build_38.png"
     },
-    "default_title": "Toggle Dev mode", 
-    "default_popup": "html/popup.html"
+    "default_title": "Chrome Header Toggler - (No headers configured for this host)"
   }
 }
