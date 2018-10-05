@@ -1,6 +1,6 @@
 {
-  "name": "Devmode Toggle",
-  "description": "Toggles Dev Mode",
+  "name": "Chrome header toggler",
+  "description": "Chrome header toggler",
   "version": "0.0.0.1",
   "manifest_version": 2,
   "background": {
@@ -16,11 +16,11 @@
     "storage"
   ],
   "icons": {
-    "128": "img/commerce_w_72.png"
+    "128": "img/build_72.png"
   },
   "page_action": {
     "default_icon":{
-      "36": "img/commerce_w_38.png"
+      "36": "img/build_38.png"
     },
     "default_title": "Toggle Dev mode", 
     "default_popup": "html/popup.html"

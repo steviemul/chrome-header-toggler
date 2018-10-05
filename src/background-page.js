@@ -1,6 +1,4 @@
-import options from './options.js';
-
-console.log('loading bg');
+let options = [];
 
 const encodeProperty = (url, property) => {
 
@@ -33,16 +31,48 @@ const requestHandler = (details) => {
   };  
 };
 
+const addWebRequestListener = () => {
+  chrome.webRequest.onBeforeSendHeaders.addListener(
+    requestHandler , {
+      urls: ["<all_urls>"]
+    },
+    ["blocking", "requestHeaders"]
+  );
+};
+
+const addMessageListeners = () => {
+  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+
+    options.forEach((option) => {
+      if (request.query === option.value) {
+        sendResponse({
+          [option.value]: (getStoredValue(request.url, option.value)) === 'true'
+        });
+      } else if (request.action === option.value) {
+        localStorage.setItem(encodeProperty(request.url, option.value), request.value);
+
+        if (request.tabId) {
+          sendToTab(request.tabId, request);
+        }
+      }
+    });
+  });
+};
+
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  chrome.pageAction.show(tabId);
+  chrome.storage.sync.get({options:[]}, (state) => {
+    if (state.options.length > 0) {
+      options = state.options;
+
+      addWebRequestListener();
+      addMessageListeners();
+      chrome.pageAction.show(tabId);
+    }
+  });
+  
 });
 
-chrome.webRequest.onBeforeSendHeaders.addListener(
-  requestHandler , {
-    urls: ["<all_urls>"]
-  },
-  ["blocking", "requestHeaders"]
-);
+
 
 const sendToTab = (tabId, payload) => {
 
@@ -50,19 +80,3 @@ const sendToTab = (tabId, payload) => {
     console.info('message acknowledge');
   });
 };
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-
-  options.forEach((option) => {
-    if (request.query === option.value) {
-      sendResponse({[option.value]: (getStoredValue(request.url, option.value)) === 'true'});  
-    }
-    else if (request.action === option.value) {
-      localStorage.setItem(encodeProperty(request.url, option.value), request.value);
-
-      if (request.tabId) {
-        sendToTab(request.tabId, request);
-      }
-    }
-  });
-});

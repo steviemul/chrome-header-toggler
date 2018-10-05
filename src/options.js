@@ -1,5 +1,7 @@
 export default [
   {
+    host: '',
+    description: '',
     value: 'devmode-active',
     header: 'x-occ-sf-env',
     on: {
@@ -12,6 +14,8 @@ export default [
     } 
   },
   {
+    host: '',
+    description: '',
     value: 'local-layouts-active',
     header: 'x-occ-sf-layout-mode',
     on: {

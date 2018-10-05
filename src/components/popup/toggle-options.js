@@ -1,5 +1,3 @@
-import options from '../../options.js';
-
 class ToggleOptions extends HTMLElement {
 
   connectedCallback() {
@@ -8,12 +6,16 @@ class ToggleOptions extends HTMLElement {
       const tabId = tabs[0].id;
       const url = tabs[0].url;
 
-      options.forEach((option) => {
-        const optionElement = document.createElement('toggle-option');
+      chrome.storage.sync.get({options:[]}, (state) => {
+        if (state.options.length > 0) {
+          state.options.forEach((option) => {
+            const optionElement = document.createElement('toggle-option');
 
-        optionElement.build(option, tabId, url);
+            optionElement.build(option, tabId, url);
 
-        this.appendChild(optionElement);
+            this.appendChild(optionElement);
+          });
+        }
       });
     });
   }
