@@ -1,12 +1,30 @@
 <html>
   <head>
-    <link rel="stylesheet" href="../style/options.css">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="../css/materialize.min.css">
+    <link rel="stylesheet" href="../css/options.css">
   </head>
   <body>
     <div class="container">
-      <h1>Options</h1>
-      <header-options></header-options>
+      <div class="row valign-wrapper header">
+        <div class="col s10"><h4>Header Configuration Options</h4></div>
+        <div class="col s2"><a class="waves-effect waves-light btn" id="addOption"><i class="material-icons left">add</i>Add</a></div>
+      </div>
+      
+      <div class="row">
+        <div class="cols12">
+          <header-options></header-options>
+        </div>
+      </div>
     </div>
+    <script type="text/javascript" src="../libs/materialize.min.js"></script>
+    <script type="module" src="../src/components/options/header-option.js"></script>
     <script type="module" src="../src/components/options/header-options.js"></script>
+    <script type="text/javascript" src="../src/options-page.js"></script>
   </body>
 </html>
