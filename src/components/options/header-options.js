@@ -30,8 +30,6 @@ const applyBindings = (child, state) => {
 
       return current;
     }, state);
-
-    console.log(statePath);
   });
 };
 
@@ -100,7 +98,7 @@ class HeaderOptions extends HTMLElement {
       else if (clicker.title === 'delete') {
         const option = clicker.closest('li').innerState;
         const position = this._state.options.indexOf(option);
-        
+
         this._state.options.splice(position, 1);
         this.update();
       }

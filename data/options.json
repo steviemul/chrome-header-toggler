@@ -1,0 +1,31 @@
+{
+  "options": [{
+      "description": "Devmode SF 2.0",
+      "header": "x-occ-sf-env",
+      "host": "",
+      "off": {
+        "text": "Dev mode off",
+        "value": ""
+      },
+      "on": {
+        "text": "Dev mode on",
+        "value": "development"
+      },
+      "value": "devmode-active"
+    },
+    {
+      "host": "",
+      "description": "Local Layout Mode SF 2.0",
+      "value": "local-layouts-active",
+      "header": "x-occ-sf-layout-mode",
+      "on": {
+        "value": "local",
+        "text": "Using Local Layouts"
+      },
+      "off": {
+        "value": "",
+        "text": "Use Local Layouts"
+      }
+    }
+  ]
+}

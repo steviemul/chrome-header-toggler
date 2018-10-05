@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="../css/materialize.min.css">
+    <link rel="stylesheet" href="../css/jsoneditor.min.css">
     <link rel="stylesheet" href="../css/options.css">
   </head>
   <body>
@@ -24,14 +25,35 @@
 
       <div class="row">
         <div class="col s12">
-          <a class="waves-effect waves-light btn blue-grey darken-2">Import</a>
-          <a class="waves-effect waves-light btn blue-grey darken-2">Export</a>
+          <a class="waves-effect waves-light btn modal-trigger blue-grey darken-2" href="#importExport">Import / Export</a>
         </div>
       </div>
     </div>
     
+    <div id="importExport" class="modal">
+      <div class="modal-content">
+        <div class="row">
+          <div class="col s12">
+             <h4>Raw Configuration</h4>
+          </div>
+        </div>
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+              <div class="col s12">
+                <div id="txtConfig" style="width: 100%; height: 400px;"></div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Save</a>
+      </div>
+    </div>
+
     <script type="text/javascript" src="../libs/materialize.min.js"></script>
-    <script type="module" src="../src/components/options/header-option.js"></script>
+    <script type="text/javascript" src="../libs/jsoneditor.min.js"></script>
     <script type="module" src="../src/components/options/header-options.js"></script>
     <script type="text/javascript" src="../src/options-page.js"></script>
   </body>

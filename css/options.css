@@ -37,3 +37,7 @@ h6 {
 .section-label {
   margin:0;
 }
+
+div.jsoneditor-menu {
+  background-color:#455a64;
+}
